@@ -24,3 +24,11 @@ Prerequesites
 
 We recommend you to have npm and Node.js already installed on your machine to quickly boot up a http server.
 
+Negative
+: To get an API key you need register or sign in to TomTom Developer Portal. Request an evaluation API key to access the service you want to use the SDK with. 
+
+Positive
+: It is possible to have a single key(app) for all TomTom services, but you can also  choose : to have individual keys for the different services.
+
+
+
