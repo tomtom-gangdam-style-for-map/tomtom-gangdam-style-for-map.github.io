@@ -30,5 +30,9 @@ Negative
 Positive
 : It is possible to have a single key(app) for all TomTom services, but you can also  choose : to have individual keys for the different services.
 
+## Download our Maps SDK offline examples
+Duration: 0:10
+
+Before you start, you need to download the latest version of our offline functional examples from [Download functional examples](https://developer.tomtom.com/maps-sdk/maps-sdk-downloads).
 
 
