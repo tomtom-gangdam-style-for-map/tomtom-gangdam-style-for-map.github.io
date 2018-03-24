@@ -1,0 +1,139 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>TomTom Creating a custom Gangdam vector map style</title>
+  <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../../elements/codelab.html">
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <style is="custom-style">
+    body {
+      font-family: "Roboto",sans-serif;
+      background: var(--google-codelab-background, --paper-grey-300);
+    }
+  </style>
+  
+</head>
+<body unresolved class="fullbleed">
+
+  <google-codelab title="TomTom Creating a custom Gangdam vector map style"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="Overview of the tutorial" duration="5">
+          This tutorial shows you how to create custom vector map style. In this tutorial you will do the following:  <ul>
+<li>Modify a default TomTom style for vector maps with use of the Maputnik editor</li>
+<li>Apply the newly created style</li>
+</ul>
+  Prerequesites  <ul>
+<li>API key</li>
+<li>Npm and Node.js</li>
+</ul>
+  We recommend you to have npm and Node.js already installed on your machine to quickly boot up a http server.   <aside class="warning">To get an API key you need register or sign in to TomTom Developer Portal. Request an evaluation API key to access the service you want to use the SDK with.</aside>
+ <aside class="special">It is possible to have a single key(app) for all TomTom services, but you can also  choose : to have individual keys for the different services.</aside>
+   
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Download our Maps SDK offline examples" duration="10">
+          Before you start, you need to download the latest version of our offline functional examples from <a href="https://developer.tomtom.com/maps-sdk-web/downloads" target="_blank">here</a> <paper-button class="colored" raised><iron-icon icon="file-download"></iron-icon> functional examples</paper-button>.  <img src="img/3c1a18672fbd28c8.png">  
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Extract the examples" duration="5">
+          Create a new directory and extract the examples there.  For this tutorial, I created a directory called “examples”. This is how it should look like after the extraction:  <img src="img/985edf2a38ce435e.png">  The contents of the “sdk” folder should look like this:  <img src="img/f84d2c66e98f057d.png">  There are several directories and files, but we are only interested in the following ones:  <ul>
+<li>glyphs - contains fonts used for rendering vector maps</li>
+<li>sprites - contains images used for rendering vector maps</li>
+<li>styles - contains json files with style definition</li>
+</ul>
+  TomTom vector maps styles are compatible with Mapbox Styles Specification. This format defines rendered maps properties - fill colors, line styles and thickness, etc. To read more about this specification, please go to <a href="https://www.mapbox.com/mapbox-gl-js/style-spec/" target="_blank">here</a> .  To be able to provide labels and additional images on the map (e.g. road shields) two more assets are required:  <ul>
+<li>glyphs - these are fonts in a binary pbf format. They are transformed to speed up rendering process. To read more about it, please go to here. This is a rather advanced article.</li>
+<li>sprites - they consist of two files:  </li>
+<li>image file - a png file containing concatenated images</li>
+<li>index file - a json file describing content of an image file.</li>
+</ul>
+   Sprites might be provided in an additional form appropriate for high-DPI devices. In that case “@2x” suffix should be appended to the file names, e.g. “sprites@2x.png” More about sprites can be found here.  
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Run server with examples" duration="10">
+          This step is a prerequisite needed to configure the styles editor. In order to accomplish it, you need to have Node.js installed (this is out of the scope of this tutorial). Please, refer to <a href="https://nodejs.org/en/download/" target="_blank">https://nodejs.org/en/download/</a>, if you need further assistance with this task.  Open a console terminal and go to a directory created to host offline examples. Now, type in the following instruction:  <pre><code language="bash" class="bash">npm install &amp;&amp; npm start
+</code></pre>
+  After a while, you should see text similar to the one in this picture:  <img src="img/dbedbe372f56eec2.png">  If you would like to know more about running offline examples, you may take a look at one of our tutorials: <a href="https://developer.tomtom.com/maps-sdk-web/tutorials-basics/running-examples-locally" target="_blank">Running examples locally</a>  
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Upload styles" duration="15">
+          There are several ways to edit styles. You may do this manually in a text editor of your choice, but we prefer to use Maputnik - a visual map designer. You may find it here: <a href="https://maputnik.github.io/editor/" target="_blank">https://maputnik.github.io/editor/</a>  The first step is to upload a file containing a style definition to Maputnik. Click on the “Open” button. <img src="img/1fee23dac993cf55.png">  Now, in a popup window, select the “Upload” button. <img src="img/385c2d86f7adbcb.png">  For this particular tutorial, we will edit the “basic_main.json” style. You may find it in the “styles” directory described in the”Extract the examples” step.  
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Provide an API key in order to access data sources" duration="5">
+          One of the prerequisites for this tutorial is to obtain API key for an Online Map product. Now we will use it.  Click on the “Sources” button.  <img src="img/bdf2f7f559557602.png">  Next, replace “{key}” placeholder in each of the tile URLs with your API key.  <img src="img/ffedc8cad84af67b.png">  Close the overlay to apply the changes by clicking on X in the top right corner.  
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Update glyphs and sprites paths" duration="5">
+          In order to complete this step, we will use the http server with examples run in one of the previous steps. Click on the “Style Settings” button.  <img src="img/7de224e81e316eba.png">  In a popup window, replace “Sprite URL” with  <pre><code>http://localhost:8080/sdk/sprites/sprite
+</code></pre>
+  and “Glyphs URL” with  <pre><code>http://localhost:8080/sdk/glyphs/{fontstack}/{range}.pbf
+</code></pre>
+  <img src="img/86437538b54d9103.png">  Close the overlay to apply the changes by clicking on X in the top right corner.  
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Edit a style" duration="15">
+          Now, you should be able to see a map in the editor. From now on, you may edit all style properties and you will see an impact of your changes instantly. To give you a glimpse of possibilities, we will change the color of oceans. Click on an ocean on a map and select the “Ocean or sea” layer name from a popup.  <img src="img/ead070ca63f6991f.png">  From “Paint properties”, select “Color”. <img src="img/c3282ea35c10e300.png">  Set a color of your choice. After this operation, oceans should be filled with a chosen color. <img src="img/aae4a78e224a24dd.png">  
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Export a style" duration="5">
+          In order to download an edited style, click on the “Export” button.  <img src="img/b311b590c3b8df33.png">  In a popup window, choose the <strong>“Download”</strong> button.  <img src="img/8bbc49eea1accc0a.png">  Your new style should be available on your computer. Rename to gangdam.json ;) :)  
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Test your new style" duration="10">
+          Now, it’s time to test your style. Go <a href="https://developer.tomtom.com/maps-sdk-web/functional-examples#vector-map-style-altering" target="_blank">here</a> and upload the modified style (click on the “Choose File” button). After a while you should achieve a following result:  <img src="img/9e80499998b9496b.png">  Above steps allow you configure a default TomTom style for edition in Maputnik. If you are interested in the topic of vector tiles or the style customization, please find the following list of suggested further readings:  <ol start="1">
+<li>Online Maps Vector Tile documentation (https://developer.tomtom.com/online-maps/online-maps-documentation-vector/tile) in order to create custom styles you need to know more about a data source. In advanced use cases, it is useful to know possible layers’ names and their types.</li>
+<li>Maputnik editor documentation (https://github.com/maputnik/editor/wiki) guides and tutorials for the Maputnik editor</li>
+</ol>
+ 
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-49880327-14', 'auto');
+
+    (function() {
+      var gaCodelab = '';
+      if (gaCodelab) {
+        ga('create', gaCodelab, 'auto', {name: 'codelab'});
+      }
+
+      var gaView;
+      var parts = location.search.substring(1).split('&');
+      for (var i = 0; i < parts.length; i++) {
+        var param = parts[i].split('=');
+        if (param[0] === 'viewga') {
+          gaView = param[1];
+          break;
+        }
+      }
+      if (gaView && gaView !== gaCodelab) {
+        ga('create', gaView, 'auto', {name: 'view'});
+      }
+    })();
+  </script>
+
+</body>
+</html>

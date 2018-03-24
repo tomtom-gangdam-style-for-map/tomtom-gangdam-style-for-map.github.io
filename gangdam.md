@@ -101,9 +101,9 @@ For this particular tutorial, we will edit the "basic_main.json" style. You may 
 ## Provide an API key in order to access data sources
 Duration: 0:05
 
-One of the prerequisites for this tutorial is to obtain API key for an Online Map product. Now we will use it.  
+One of the prerequisites for this tutorial is to obtain API key for an Online Map product. Now we will use it.
   
-Click on the "Sources" button.    
+Click on the "Sources" button.
 
 ![step5a](https://s3-eu-west-1.amazonaws.com/released-artifacts-3.x/assets/tutorial_images/creating-styles/step5a.png)
 
